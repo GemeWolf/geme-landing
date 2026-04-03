@@ -1,24 +1,61 @@
-# build output
+# ═══════════════════════════════════════════
+# BUILD OUTPUT
+# ═══════════════════════════════════════════
 dist/
-# generated types
 .astro/
 
-# dependencies
+# ═══════════════════════════════════════════
+# DEPENDENCIES
+# ═══════════════════════════════════════════
 node_modules/
+*.local
 
-# logs
+# ═══════════════════════════════════════════
+# ENVIRONMENT VARIABLES
+# ═══════════════════════════════════════════
+.env
+.env.*
+!.env.example
+
+# ═══════════════════════════════════════════
+# LOGS
+# ═══════════════════════════════════════════
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
-
-# environment variables
-.env
-.env.production
-
-# macOS-specific files
+# ═══════════════════════════════════════════
+# OS FILES
+# ═══════════════════════════════════════════
 .DS_Store
+Thumbs.db
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
 
-# jetbrains setting folder
+# ═══════════════════════════════════════════
+# EDITOR / IDE
+# ═══════════════════════════════════════════
 .idea/
+*.swp
+*.swo
+*~
+.project
+*.sublime-*
+
+# ═══════════════════════════════════════════
+# TESTING / COVERAGE
+# ═══════════════════════════════════════════
+coverage/
+.nyc_output/
+
+# ═══════════════════════════════════════════
+# CACHE
+# ═══════════════════════════════════════════
+.cache/
+.vite/
