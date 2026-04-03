@@ -1,0 +1,105 @@
+---
+/**
+ * Navbar — sticky top navigation with glass blur.
+ * Mobile: hamburger menu. Desktop: inline links + CTA.
+ */
+import Icon from '../ui/Icon.astro';
+import Button from '../ui/Button.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<header class="fixed top-0 w-full z-50 bg-surface-dim/60 backdrop-blur-xl border-b border-outline-variant/20">
+  <nav class="flex justify-between items-center px-6 py-4 max-w-screen-2xl mx-auto">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-3 group">
+      <Icon name="layout-grid" class="w-6 h-6 text-primary-container" />
+      <span class="text-xl font-bold tracking-tighter text-primary-container font-headline uppercase">
+        GEME
+      </span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <div class="hidden md:flex gap-8 items-center">
+      <a href="#stack" class="font-label tracking-tight text-sm uppercase text-on-surface-variant hover:text-primary transition-colors duration-300">
+        {t('nav.stack')}
+      </a>
+      <a href="#pillars" class="font-label tracking-tight text-sm uppercase text-on-surface-variant hover:text-primary transition-colors duration-300">
+        {t('nav.approach')}
+      </a>
+      <a href="#projects" class="font-label tracking-tight text-sm uppercase text-on-surface-variant hover:text-primary transition-colors duration-300">
+        {t('nav.projects')}
+      </a>
+      <a href="#certs" class="font-label tracking-tight text-sm uppercase text-on-surface-variant hover:text-primary transition-colors duration-300">
+        {t('nav.credentials')}
+      </a>
+      <div class="flex gap-1 font-label text-xs tracking-widest uppercase">
+        <a href="/" class:list={['px-2 py-1 transition-colors', lang === 'en' ? 'text-primary font-bold' : 'text-on-surface-variant/60 hover:text-primary']}>
+          {t('nav.lang.en')}
+        </a>
+        <span class="text-outline-variant">|</span>
+        <a href="/es" class:list={['px-2 py-1 transition-colors', lang === 'es' ? 'text-primary font-bold' : 'text-on-surface-variant/60 hover:text-primary']}>
+          {t('nav.lang.es')}
+        </a>
+      </div>
+      <Button variant="primary" data-contact-trigger class="text-[10px] px-4 py-2">
+        {t('nav.cta')}
+      </Button>
+    </div>
+
+    <!-- Mobile Hamburger -->
+    <button
+      id="mobile-menu-toggle"
+      class="md:hidden flex items-center"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+    >
+      <Icon name="menu" class="w-7 h-7 text-primary-container" />
+    </button>
+  </nav>
+
+  <!-- Mobile Menu Overlay -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden fixed inset-0 top-[73px] bg-surface-dim/95 backdrop-blur-2xl z-40"
+  >
+    <div class="flex flex-col items-center justify-center gap-8 pt-20 px-6">
+      <a href="#stack" class="font-label tracking-widest text-lg uppercase text-on-surface-variant hover:text-primary transition-colors mobile-nav-link">
+        {t('nav.stack')}
+      </a>
+      <a href="#pillars" class="font-label tracking-widest text-lg uppercase text-on-surface-variant hover:text-primary transition-colors mobile-nav-link">
+        {t('nav.approach')}
+      </a>
+      <a href="#projects" class="font-label tracking-widest text-lg uppercase text-on-surface-variant hover:text-primary transition-colors mobile-nav-link">
+        {t('nav.projects')}
+      </a>
+      <a href="#certs" class="font-label tracking-widest text-lg uppercase text-on-surface-variant hover:text-primary transition-colors mobile-nav-link">
+        {t('nav.credentials')}
+      </a>
+      <Button variant="primary" data-contact-trigger class="mt-4">
+        {t('nav.cta')}
+      </Button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const isOpen = !menu.classList.contains('hidden');
+      menu.classList.toggle('hidden');
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+    // Close menu on nav link click
+    menu.querySelectorAll('.mobile-nav-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+</script>

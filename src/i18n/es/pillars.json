@@ -1,0 +1,12 @@
+{
+  "pillars.label": "Metodología",
+  "pillars.title": "Pilares Arquitectónicos",
+  "pillars.scalable.title": "Sistemas Escalables",
+  "pillars.scalable.description": "Servicios backend de alta concurrencia con 99.9% de uptime y fundamentos de Clean Architecture.",
+  "pillars.performance.title": "Rendimiento Primero",
+  "pillars.performance.description": "Reducción del 30% en latencia de consultas mediante optimización SQL y diseño eficiente de esquemas.",
+  "pillars.security.title": "Mentalidad de Seguridad",
+  "pillars.security.description": "Autenticación OAuth/JWT, hardening de firewall, configuración de reverse proxy y mitigación de DDoS.",
+  "pillars.devops.title": "Cultura DevOps",
+  "pillars.devops.description": "Pipelines CI/CD automatizados, containerización con Docker & Kubernetes para deploys sin tiempo de inactividad."
+}

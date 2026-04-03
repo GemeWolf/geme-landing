@@ -1,0 +1,28 @@
+---
+/**
+ * Button — reusable CTA component.
+ * Variants: 'primary' (solid wine), 'secondary' (glass/outline).
+ */
+interface Props {
+  variant?: 'primary' | 'secondary';
+  href?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { variant = 'primary', href, class: className, ...rest } = Astro.props;
+
+const baseClasses = 'inline-flex items-center justify-center px-6 py-4 rounded-sm font-label tracking-widest text-xs uppercase transition-all duration-300 cursor-pointer';
+
+const variantClasses = {
+  primary: 'bg-primary-container text-white hover:-translate-y-0.5 shadow-lg shadow-primary-container/20 glow-on-hover',
+  secondary: 'bg-surface-variant/30 backdrop-blur border border-outline-variant/30 text-on-surface hover:border-primary/50',
+};
+
+const classes = [baseClasses, variantClasses[variant], className].filter(Boolean).join(' ');
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag href={href} class={classes} {...rest}>
+  <slot />
+</Tag>

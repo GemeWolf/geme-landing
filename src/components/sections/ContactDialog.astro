@@ -1,0 +1,159 @@
+---
+/**
+ * ContactDialog — native <dialog> modal for contact form.
+ * Opens via data-contact-trigger buttons. Zero framework dependencies.
+ * Minimal inline JS for open/close behavior.
+ */
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<dialog
+  id="contact-dialog"
+  class="w-full max-w-lg mx-auto my-auto p-0 bg-transparent backdrop:bg-surface-dim/80 backdrop:backdrop-blur-sm"
+  data-success-msg={t('contact.toast')}
+>
+  <div class="glass-card rounded-sm p-8 md:p-10 border border-outline-variant/30">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-8">
+      <div>
+        <span class="font-label text-[10px] tracking-[0.3em] text-primary uppercase block mb-1">
+          {t('contact.label')}
+        </span>
+        <h3 class="font-headline text-2xl font-bold text-on-surface">{t('contact.title')}</h3>
+      </div>
+      <button
+        id="contact-close"
+        class="w-10 h-10 flex items-center justify-center rounded-sm bg-surface-container-highest/50 hover:bg-primary-container transition-colors"
+        aria-label={t('contact.close')}
+      >
+        <Icon name="x" class="w-5 h-5 text-on-surface-variant" />
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form id="contact-form" class="flex flex-col gap-5">
+      <div>
+        <label for="contact-name" class="font-label text-[10px] tracking-widest text-primary uppercase block mb-2">
+          {t('contact.name')}
+        </label>
+        <input
+          type="text"
+          id="contact-name"
+          name="name"
+          required
+          class="w-full bg-surface-container-lowest border-b-2 border-outline-variant/30 focus:border-primary px-4 py-3 text-on-surface font-body text-sm outline-none transition-colors rounded-sm"
+          placeholder={t('contact.name.placeholder')}
+        />
+      </div>
+      <div>
+        <label for="contact-email" class="font-label text-[10px] tracking-widest text-primary uppercase block mb-2">
+          {t('contact.email')}
+        </label>
+        <input
+          type="email"
+          id="contact-email"
+          name="email"
+          required
+          class="w-full bg-surface-container-lowest border-b-2 border-outline-variant/30 focus:border-primary px-4 py-3 text-on-surface font-body text-sm outline-none transition-colors rounded-sm"
+          placeholder={t('contact.email.placeholder')}
+        />
+      </div>
+      <div>
+        <label for="contact-subject" class="font-label text-[10px] tracking-widest text-primary uppercase block mb-2">
+          {t('contact.subject')}
+        </label>
+        <input
+          type="text"
+          id="contact-subject"
+          name="subject"
+          required
+          class="w-full bg-surface-container-lowest border-b-2 border-outline-variant/30 focus:border-primary px-4 py-3 text-on-surface font-body text-sm outline-none transition-colors rounded-sm"
+          placeholder={t('contact.subject.placeholder')}
+        />
+      </div>
+      <div>
+        <label for="contact-message" class="font-label text-[10px] tracking-widest text-primary uppercase block mb-2">
+          {t('contact.message')}
+        </label>
+        <textarea
+          id="contact-message"
+          name="message"
+          required
+          rows="4"
+          class="w-full bg-surface-container-lowest border-b-2 border-outline-variant/30 focus:border-primary px-4 py-3 text-on-surface font-body text-sm outline-none transition-colors rounded-sm resize-none"
+          placeholder={t('contact.message.placeholder')}
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-primary-container text-white py-4 rounded-sm font-label tracking-widest text-xs uppercase glow-on-hover transition-all mt-2 cursor-pointer"
+      >
+        {t('contact.submit')}
+      </button>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  // Contact Dialog — open/close behavior
+  const dialog = document.getElementById('contact-dialog') as HTMLDialogElement | null;
+  const closeBtn = document.getElementById('contact-close');
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+
+  if (dialog) {
+    // Open triggers — any element with data-contact-trigger
+    document.querySelectorAll('[data-contact-trigger]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        dialog.showModal();
+      });
+    });
+
+    // Close button
+    closeBtn?.addEventListener('click', () => dialog.close());
+
+    // Close on backdrop click
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+
+    // Form submit simulation (no backend — show success feedback)
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      form.reset();
+      dialog.close();
+
+      // Simple toast notification
+      const toast = document.createElement('div');
+      toast.className =
+        'fixed bottom-6 right-6 z-[100] bg-primary-container/90 text-white px-6 py-4 rounded-sm font-label text-xs tracking-widest shadow-2xl backdrop-blur-sm animate-[fadeIn_300ms_ease]';
+      toast.textContent = dialog.dataset.successMsg ?? 'Message sent!';
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 300ms ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    });
+  }
+</script>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  dialog::backdrop {
+    background: rgba(24, 8, 25, 0.8);
+    backdrop-filter: blur(4px);
+  }
+  dialog[open] {
+    animation: fadeIn 300ms ease;
+  }
+</style>

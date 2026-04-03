@@ -1,0 +1,9 @@
+{
+  "projects.title": "Recent Builds",
+  "projects.xrespect.role": "Backend & DevOps Engineer",
+  "projects.xrespect.description": "Maintained high-concurrency backend services ensuring 99.9% uptime. Reduced DB response latency by 30% and implemented full CI/CD automation pipelines.",
+  "projects.quasar.role": "Support Software Engineer",
+  "projects.quasar.description": "Custom backend solutions for e-commerce, resolving critical level 2/3 incidents through code debugging and log analysis.",
+  "projects.arcadia.role": "DevOps Engineer",
+  "projects.arcadia.description": "Optimized Linux server resource consumption and configured secure production environments following infrastructure best practices."
+}

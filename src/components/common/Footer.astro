@@ -1,0 +1,56 @@
+---
+/**
+ * Footer — minimal footer with logo, social links, and copyright.
+ */
+import { socialLinks } from '../../data/social-links';
+import Icon from '../ui/Icon.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<footer class="bg-surface-dim w-full py-16 px-6 border-t border-outline-variant/40">
+  <div class="flex flex-col items-center gap-10 w-full max-w-screen-2xl mx-auto">
+    <!-- Logo -->
+    <div class="flex flex-col items-center gap-3">
+      <span class="text-primary-container font-bold font-headline text-3xl tracking-tighter text-glow">
+        GEME
+      </span>
+      <p class="font-label text-[10px] tracking-[0.3em] uppercase text-on-surface-variant/60 text-center">
+        {t('footer.copyright')}
+      </p>
+    </div>
+
+    <!-- Social Text Links -->
+    <div class="flex flex-wrap justify-center gap-x-12 gap-y-6">
+      {socialLinks.map((link) => (
+        <a
+          href={link.url}
+          target={link.url.startsWith('mailto') ? undefined : '_blank'}
+          rel={link.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+          class="font-label text-xs font-bold tracking-widest uppercase text-primary hover:text-white underline-offset-8 hover:underline decoration-2 transition-all"
+          aria-label={link.label}
+        >
+          {link.platform}
+        </a>
+      ))}
+    </div>
+
+    <!-- Social Icon Links -->
+    <div class="flex gap-8">
+      <a href="mailto:daniellopeztalamantes@outlook.com" class="group" aria-label="Send email">
+        <Icon name="mail" class="w-6 h-6 text-primary-container group-hover:text-primary transition-colors" />
+      </a>
+      <a href="https://github.com/GemeWolf" target="_blank" rel="noopener noreferrer" class="group" aria-label="GitHub">
+        <Icon name="github" class="w-6 h-6 text-primary-container group-hover:text-primary transition-colors" />
+      </a>
+      <a href="https://linkedin.com/in/daniel-lopez-dev" target="_blank" rel="noopener noreferrer" class="group" aria-label="LinkedIn">
+        <Icon name="linkedin" class="w-6 h-6 text-primary-container group-hover:text-primary transition-colors" />
+      </a>
+      <a href="https://discord.com/users/695150517986263072" target="_blank" rel="noopener noreferrer" class="group" aria-label="Discord">
+        <Icon name="discord" class="w-6 h-6 text-primary-container group-hover:text-primary transition-colors" />
+      </a>
+    </div>
+  </div>
+</footer>

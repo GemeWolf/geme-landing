@@ -1,0 +1,22 @@
+---
+/**
+ * SectionHeader — reusable section title with label + heading.
+ * Follows the "instrument panel" aesthetic from Obsidian Pulse.
+ */
+interface Props {
+  label: string;
+  title: string;
+  centered?: boolean;
+}
+
+const { label, title, centered = false } = Astro.props;
+---
+
+<div class:list={['flex flex-col mb-10 gap-2', centered && 'items-center text-center']}>
+  <span class="font-label text-[10px] tracking-[0.2em] text-primary-container uppercase block">
+    {label}
+  </span>
+  <h2 class="font-headline text-3xl md:text-5xl font-bold tracking-tight text-on-surface">
+    {title}
+  </h2>
+</div>

@@ -1,0 +1,49 @@
+---
+/**
+ * StatsBar — GitHub commits, years experience, projects built.
+ * Build-time fetch from GitHub API with fallback.
+ */
+import Icon from '../ui/Icon.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { recentBuilds } from '../../data/projects';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+// Build-time GitHub API fetch
+let commitCount = 50; // fallback
+try {
+  const currentYear = new Date().getFullYear();
+  const res = await fetch(
+    `https://api.github.com/search/commits?q=author:GemeWolf+committer-date:>${currentYear}-01-01&per_page=1`,
+    { headers: { Accept: 'application/vnd.github.cloak-preview+json' } }
+  );
+  if (res.ok) {
+    const data = await res.json();
+    commitCount = data.total_count ?? 50;
+  }
+} catch { /* fallback stays 50 */ }
+
+const yearsExperience = new Date().getFullYear() - 2023;
+const projectCount = recentBuilds.en.length;
+
+const stats = [
+  { icon: 'git-branch', value: `${commitCount}+`, label: t('stats.commits') },
+  { icon: 'zap', value: `${yearsExperience}+`, label: t('stats.experience') },
+  { icon: 'building', value: `${projectCount}+`, label: t('stats.projects') },
+];
+---
+
+<section class="px-6 md:px-24 mb-24">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    {stats.map((stat) => (
+      <div class="glass-card rounded-sm p-6 md:p-8 border border-outline-variant/20 flex items-center gap-5">
+        <Icon name={stat.icon} class="w-8 h-8 text-primary shrink-0" />
+        <div>
+          <span class="font-headline text-3xl md:text-4xl font-bold text-on-surface block">{stat.value}</span>
+          <span class="font-label text-[10px] tracking-widest text-on-surface-variant uppercase">{stat.label}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

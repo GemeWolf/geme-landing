@@ -1,0 +1,62 @@
+---
+/**
+ * Hero — main landing section.
+ * Massive "GEME" headline with glow, profile photo (grayscale→color),
+ * status badge, and two CTAs.
+ */
+import Button from '../ui/Button.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="px-6 md:px-24 mb-24 pt-28 pb-8 relative overflow-hidden">
+  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
+    <!-- Text Content -->
+    <div class="lg:max-w-2xl">
+      <p class="font-label text-[10px] md:text-xs tracking-[0.4em] text-primary uppercase mb-2">
+        {t('hero.name')}
+      </p>
+      <h1 class="font-headline text-[clamp(4.5rem,15vw,8rem)] font-bold text-primary-container leading-[0.8] tracking-tighter text-glow mb-4">
+        GEME
+      </h1>
+      <p class="font-headline text-lg md:text-4xl text-on-surface-variant font-light tracking-tight mb-6 leading-[1.3] max-w-md">
+        {t('hero.role')}
+        <span class="text-primary font-medium">{t('hero.roleHighlight')}</span>
+      </p>
+      <p class="font-body text-base text-on-surface-variant/80 max-w-xl mb-8 leading-relaxed">
+        {t('hero.description')}
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <Button variant="primary" href="#projects">{t('hero.cta.primary')}</Button>
+        <Button variant="secondary" data-contact-trigger>{t('hero.cta.secondary')}</Button>
+      </div>
+    </div>
+
+    <!-- Profile Photo -->
+    <div class="flex justify-center relative mt-12 lg:mt-0">
+      <div class="relative w-72 h-72 md:w-80 md:h-80">
+        <!-- Glow pulse behind photo -->
+        <div class="absolute inset-0 rounded-full bg-primary-container blur-3xl opacity-20 animate-pulse"></div>
+        <!-- Photo container -->
+        <div class="relative z-10 w-full h-full rounded-full border-2 border-primary-container/30 p-2 overflow-hidden bg-surface-container">
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkx429N0Uhqb6F6y5AVUWAKZT0Y9Yvm74PYuYT_1DmTbWzjDia12IDbUAZQNrL2WT6y-RkeD8AjkfSHaGxgfBDa0PVYXt0T3z4YaK11orPHvxvSLh5V2L6bR9gYtAcaWOFNA9ijpqEYVBp_qdGXgANC0Hy3b-D8Hvgys9CbW8xGaz6ZJrI3G40SH-KmY456m1t38_1vyk_3WEp1pp_Iwct33vaAGfriQPwt2m1-bNOAiAM1qj4OzNODdqQANxbiGSceixOtNmleOjm"
+            alt="GEME — Daniel López Talamantes, Backend Engineer & DevOps Architect"
+            width="320"
+            height="320"
+            loading="eager"
+            decoding="async"
+            class="w-full h-full object-cover rounded-full grayscale hover:grayscale-0 transition-all duration-700"
+          />
+        </div>
+        <!-- Status Badge -->
+        <div class="absolute -bottom-2 -right-2 md:-bottom-4 md:-right-4 bg-surface-container p-3 md:p-4 rounded-sm border border-outline-variant/20 shadow-2xl z-20">
+          <span class="block font-label text-[8px] md:text-[10px] tracking-widest text-primary-container uppercase mb-1">{t('hero.status.label')}</span>
+          <span class="block font-headline text-[10px] md:text-xs font-bold text-primary">{t('hero.status.value')}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

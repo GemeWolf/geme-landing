@@ -1,0 +1,29 @@
+---
+/**
+ * ArchitecturalPillars — 4-card methodology section.
+ * Background shifts to surface-container-low for visual depth.
+ * Centered layout with hover glow on cards.
+ */
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { architecturalPillars } from '../../data/pillars';
+import PillarCard from '../ui/PillarCard.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="pillars" class="bg-surface-container-low px-6 md:px-24 mb-24 pt-8 pb-20">
+  <div class="max-w-4xl mx-auto text-center mb-12">
+    <span class="font-label text-[10px] tracking-[0.3em] text-primary uppercase mb-4 block">
+      {t('pillars.label')}
+    </span>
+    <h2 class="font-headline text-3xl md:text-6xl font-bold tracking-tighter text-on-surface mb-4">
+      {t('pillars.title')}
+    </h2>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-8 max-w-5xl mx-auto">
+    {architecturalPillars[lang].map((item) => (
+      <PillarCard item={item} />
+    ))}
+  </div>
+</section>

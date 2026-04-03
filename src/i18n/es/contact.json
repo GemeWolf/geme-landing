@@ -1,0 +1,15 @@
+{
+  "contact.label": "Nueva Conexión",
+  "contact.title": "Iniciar un Proyecto",
+  "contact.name": "Nombre",
+  "contact.name.placeholder": "Tu nombre",
+  "contact.email": "Correo Electrónico",
+  "contact.email.placeholder": "tu@correo.com",
+  "contact.subject": "Asunto",
+  "contact.subject.placeholder": "Consulta de proyecto",
+  "contact.message": "Mensaje",
+  "contact.message.placeholder": "Cuéntame sobre tu proyecto...",
+  "contact.submit": "ENVIAR MENSAJE",
+  "contact.close": "Cerrar diálogo",
+  "contact.toast": "¡Mensaje enviado exitosamente! 🚀"
+}

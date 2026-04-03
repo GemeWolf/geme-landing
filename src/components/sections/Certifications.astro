@@ -1,0 +1,22 @@
+---
+/**
+ * Certifications — 3-card grid with left-border accent.
+ * Displays professional credentials.
+ */
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { certifications } from '../../data/certifications';
+import SectionHeader from '../ui/SectionHeader.astro';
+import CertCard from '../ui/CertCard.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="certs" class="px-6 md:px-24 mb-24">
+  <SectionHeader label={t('certs.label')} title={t('certs.title')} />
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {certifications[lang].map((item) => (
+      <CertCard item={item} />
+    ))}
+  </div>
+</section>

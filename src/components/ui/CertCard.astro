@@ -1,0 +1,20 @@
+---
+/**
+ * CertCard — certification card with left-border accent.
+ */
+import type { CertificationItem } from '../../data/types';
+
+interface Props {
+  item: CertificationItem;
+}
+
+const { item } = Astro.props;
+---
+
+<div class="glass-card p-6 rounded-sm border-l-4 border-l-primary">
+  <span class="block font-label text-[10px] text-primary uppercase mb-2">
+    {item.year} / {item.issuer}
+  </span>
+  <h4 class="font-headline font-bold text-on-surface text-lg mb-1">{item.title}</h4>
+  <p class="font-body text-xs text-on-surface-variant/70">{item.description}</p>
+</div>

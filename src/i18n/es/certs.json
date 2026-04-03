@@ -1,0 +1,10 @@
+{
+  "certs.label": "Credenciales",
+  "certs.title": "Certificaciones",
+  "certs.gcloud.title": "Google Cloud Foundations",
+  "certs.gcloud.description": "Infraestructura y Arquitectura GCP",
+  "certs.fullstack.title": "Full Stack Web Development",
+  "certs.fullstack.description": "Entrega de aplicaciones de extremo a extremo",
+  "certs.ai.title": "AI Fundamentals",
+  "certs.ai.description": "Universidad Latinoamericana"
+}

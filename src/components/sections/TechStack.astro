@@ -1,0 +1,22 @@
+---
+/**
+ * TechStack — 10-card grid showcasing core technologies.
+ * 5 columns on desktop, 2 on mobile. Glass card styling.
+ */
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import { techStack } from '../../data/tech-stack';
+import SectionHeader from '../ui/SectionHeader.astro';
+import TechCard from '../ui/TechCard.astro';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="stack" class="px-6 md:px-24 mb-24">
+  <SectionHeader label={t('tech.label')} title={t('tech.title')} />
+  <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
+    {techStack[lang].map((item) => (
+      <TechCard item={item} />
+    ))}
+  </div>
+</section>

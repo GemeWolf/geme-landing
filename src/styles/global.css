@@ -1,0 +1,152 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════
+   OBSIDIAN PULSE — Design System Tokens
+   Tailwind v4 CSS-first configuration
+   ═══════════════════════════════════════════ */
+
+@theme {
+  /* ── Surface Hierarchy (Deep Space) ── */
+  --color-surface-dim: #1e0d1f;
+  --color-surface: #1e0d1f;
+  --color-surface-bright: #463346;
+  --color-surface-container-lowest: #180819;
+  --color-surface-container-low: #261627;
+  --color-surface-container: #2b1a2b;
+  --color-surface-container-high: #362436;
+  --color-surface-container-highest: #412e41;
+  --color-surface-variant: #412e41;
+  --color-surface-tint: #ffb2ba;
+  --color-background: #1e0d1f;
+
+  /* ── Primary Accent (The Pulse) ── */
+  --color-primary: #ffb2ba;
+  --color-primary-container: #963547;
+  --color-primary-fixed: #ffd9dc;
+  --color-primary-fixed-dim: #ffb2ba;
+  --color-on-primary: #620c23;
+  --color-on-primary-container: #ffbbc2;
+  --color-on-primary-fixed: #400011;
+  --color-on-primary-fixed-variant: #812538;
+  --color-inverse-primary: #a03c4e;
+
+  /* ── Secondary ── */
+  --color-secondary: #f7b6bc;
+  --color-secondary-container: #68393f;
+  --color-secondary-fixed: #ffd9dc;
+  --color-secondary-fixed-dim: #f7b6bc;
+  --color-on-secondary: #4d232a;
+  --color-on-secondary-container: #e4a5ab;
+  --color-on-secondary-fixed: #340f15;
+  --color-on-secondary-fixed-variant: #68393f;
+
+  /* ── On Surface & Content ── */
+  --color-on-surface: #f7daf3;
+  --color-on-surface-variant: #dbc0c2;
+  --color-on-background: #f7daf3;
+  --color-inverse-surface: #f7daf3;
+  --color-inverse-on-surface: #3d2a3d;
+
+  /* ── Outline ── */
+  --color-outline: #a38b8d;
+  --color-outline-variant: #554244;
+
+  /* ── Error ── */
+  --color-error: #ffb4ab;
+  --color-error-container: #93000a;
+  --color-on-error: #690005;
+  --color-on-error-container: #ffdad6;
+
+  /* ── Typography ── */
+  --font-headline: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-label: 'Space Grotesk', system-ui, sans-serif;
+
+  /* ── Border Radius (Sharp/Technical) ── */
+  --radius-sm: 0.125rem;
+  --radius-DEFAULT: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
+}
+
+/* ═══════════════════════════════════════════
+   VIEW TRANSITIONS — Smooth navigation
+   Native browser crossfade between pages
+   ═══════════════════════════════════════════ */
+
+@view-transition {
+  navigation: auto;
+}
+
+/* ═══════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════ */
+
+body {
+  background-color: var(--color-surface-dim);
+  background-image:
+    linear-gradient(rgba(150, 53, 71, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150, 53, 71, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  scroll-behavior: smooth;
+}
+
+/* ═══════════════════════════════════════════
+   CUSTOM UTILITIES — Obsidian Pulse
+   ═══════════════════════════════════════════ */
+
+/* Glass Card — atmospheric depth effect */
+.glass-card {
+  background: rgba(43, 26, 43, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(85, 66, 68, 0.2);
+}
+
+/* Text Glow — for hero headline */
+.text-glow {
+  text-shadow: 0 0 15px rgba(150, 53, 71, 0.6);
+}
+
+/* Glow on Hover — card/button interaction */
+.glow-on-hover {
+  transition: box-shadow 300ms ease;
+}
+.glow-on-hover:hover {
+  box-shadow: 0 0 20px rgba(150, 53, 71, 0.4);
+}
+
+/* Project Image Enhancement Filter */
+.project-img-enhance {
+  filter: brightness(1.6) contrast(1.2) saturate(1.1);
+}
+
+/* Ghost Border — barely-there guide */
+.ghost-border {
+  border: 1px solid rgba(85, 66, 68, 0.2);
+  transition: border-color 300ms ease;
+}
+.ghost-border:hover {
+  border-color: var(--color-primary-container);
+}
+
+/* Focus Visible — high-contrast for dark backgrounds */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

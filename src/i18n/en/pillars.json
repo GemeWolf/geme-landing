@@ -1,0 +1,12 @@
+{
+  "pillars.label": "Methodology",
+  "pillars.title": "Architectural Pillars",
+  "pillars.scalable.title": "Scalable Systems",
+  "pillars.scalable.description": "High-concurrency backend services with 99.9% uptime and clean architecture foundations.",
+  "pillars.performance.title": "Performance First",
+  "pillars.performance.description": "30% query latency reduction through SQL optimization and efficient schema design.",
+  "pillars.security.title": "Security Minded",
+  "pillars.security.description": "OAuth/JWT auth, firewall hardening, reverse proxy configuration and DDoS mitigation.",
+  "pillars.devops.title": "DevOps Culture",
+  "pillars.devops.description": "Automated CI/CD pipelines, containerization with Docker & Kubernetes for zero-downtime deploys."
+}

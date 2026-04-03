@@ -1,0 +1,15 @@
+{
+  "contact.label": "New Connection",
+  "contact.title": "Start a Project",
+  "contact.name": "Name",
+  "contact.name.placeholder": "Your name",
+  "contact.email": "Email",
+  "contact.email.placeholder": "you@email.com",
+  "contact.subject": "Subject",
+  "contact.subject.placeholder": "Project inquiry",
+  "contact.message": "Message",
+  "contact.message.placeholder": "Tell me about your project...",
+  "contact.submit": "SEND MESSAGE",
+  "contact.close": "Close dialog",
+  "contact.toast": "Message sent successfully! 🚀"
+}

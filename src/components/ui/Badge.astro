@@ -1,0 +1,21 @@
+---
+/**
+ * Badge — tech tag / chip component.
+ * Used in project cards to display stack technologies.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span
+  class:list={[
+    'px-2 py-1 bg-primary-container/20 border border-primary-container text-primary',
+    'text-[9px] font-bold font-label uppercase tracking-widest rounded-sm',
+    className,
+  ]}
+>
+  <slot />
+</span>

@@ -1,0 +1,36 @@
+---
+/**
+ * CallToAction — high-impact CTA section.
+ * "Ready to evolve?" with radial gradient background.
+ */
+import Button from '../ui/Button.astro';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section class="px-6 md:px-24 mb-20">
+  <div class="bg-surface-container-low p-12 md:p-32 rounded-sm border border-primary-container/30 relative overflow-hidden text-center">
+    <!-- Radial gradient overlay -->
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,#963547_0%,transparent_70%)]"></div>
+    </div>
+
+    <div class="relative z-10">
+      <h2 class="font-headline text-4xl md:text-7xl font-bold tracking-tighter text-on-surface mb-6 leading-none">
+        {t('cta.title')}
+      </h2>
+      <p class="font-body text-base md:text-xl text-on-surface-variant/80 max-w-2xl mx-auto mb-10">
+        {t('cta.description')}
+      </p>
+      <Button
+        variant="primary"
+        data-contact-trigger
+        class="px-10 py-5 text-base shadow-2xl shadow-primary-container/40 hover:scale-105"
+      >
+        {t('cta.button')}
+      </Button>
+    </div>
+  </div>
+</section>

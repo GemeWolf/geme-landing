@@ -1,0 +1,22 @@
+---
+/**
+ * TechCard — individual technology card for the stack grid.
+ * Glass card with icon, name, and description.
+ */
+import type { TechItem } from '../../data/types';
+import Icon from './Icon.astro';
+
+interface Props {
+  item: TechItem;
+}
+
+const { item } = Astro.props;
+---
+
+<div class="glass-card p-5 md:p-6 rounded-sm hover:border-primary-container transition-all group">
+  <div class="w-10 h-10 mb-4 flex items-center justify-center bg-surface-container-highest rounded-sm group-hover:bg-primary-container transition-colors">
+    <Icon name={item.icon} class="w-5 h-5 text-primary group-hover:text-white transition-colors" />
+  </div>
+  <h3 class="font-headline text-sm font-bold text-on-surface mb-2 leading-tight">{item.name}</h3>
+  <p class="font-body text-[9px] text-on-surface-variant/70 leading-relaxed">{item.description}</p>
+</div>
