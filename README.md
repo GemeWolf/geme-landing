@@ -1,43 +1,31 @@
-# Astro Starter Kit: Minimal
+# geme-landing
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Landing / portfolio (Astro + Tailwind v4).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Comandos
 
-## 🚀 Project Structure
+| Comando         | Acción                          |
+| --------------- | ------------------------------- |
+| `npm install`   | Instalar dependencias           |
+| `npm run dev`   | Servidor en `localhost:4321`    |
+| `npm run build` | Build estático en `./dist/`     |
+| `npm run preview` | Previsualizar el build        |
 
-Inside of your Astro project, you'll see the following folders and files:
+Requiere **Node.js ≥ 22.12** (ver `package.json`).
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Git: ramas y despliegue
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+| Rama   | Uso |
+| ------ | --- |
+| `geme` | Desarrollo diario y commits. |
+| `dev`  | Integración: los PR desde `geme` apuntan aquí. |
+| `main` | Producción. |
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+**Promoción automática:** al hacer push a `dev`, GitHub Actions ejecuta `npm ci` y `npm run build`; si pasa, fusiona `dev` en `main` (workflow `promote-dev-to-main.yml`).
 
-Any static assets, like images, can be placed in the `public/` directory.
+**CI:** en pushes a `geme`/`dev` y PRs hacia `dev`/`main` se ejecuta el mismo build (`ci.yml`).
 
-## 🧞 Commands
+### Ajustes en GitHub
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- Si `main` tiene **branch protection** que exija revisión o bloquee al bot, el paso de merge fallará. Opciones: permitir que GitHub Actions suba a `main`, o usar un PAT en un secret y `git push` con ese token.
+- Tras el primer workflow en el repo, revisa la pestaña **Actions** si algo falla.

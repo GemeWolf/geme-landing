@@ -1,0 +1,44 @@
+# Tras cada push a `dev`: verifica build y fusiona `dev` en `main`.
+# Requiere que `main` permita push del GITHUB_TOKEN (sin revisiones obligatorias
+# que bloqueen al bot), o usar un PAT con permisos en los secretos del repo.
+name: Promote dev to main
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+concurrency:
+  group: promote-dev-to-main
+  cancel-in-progress: true
+
+jobs:
+  build-and-promote:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository (full history for merge)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies and build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Merge dev into main and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B main origin/main
+          git merge origin/dev --no-edit -m "chore: merge dev into main (auto-promote)"
+          git push origin main
