@@ -13,27 +13,49 @@ interface Props {
 
 const { item } = Astro.props;
 const isImageRight = item.layout === 'image-right';
+const plainImage = item.plainImage === true;
 ---
 
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
-  {/* Image */}
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
+  {/* Image — default: framed + overlay + enhance; plainImage: solo img */}
   <div
     class:list={[
-      'lg:col-span-7 bg-surface-container rounded-sm overflow-hidden border border-outline-variant/20 shadow-2xl group',
+      'lg:col-span-7',
+      !plainImage && 'group',
       isImageRight && 'order-1 lg:order-2',
     ]}
   >
-    {item.imageUrl ? (
+    {item.imageUrl && plainImage ? (
       <img
         src={item.imageUrl}
         alt={`Project ${item.title}`}
         loading="lazy"
         decoding="async"
-        class="w-full aspect-video object-cover project-img-enhance group-hover:scale-105 transition-all duration-700"
+        class="w-full aspect-[16/9] object-cover rounded-[8px]"
       />
     ) : (
-      <div class="w-full aspect-video flex items-center justify-center bg-surface-container">
-        <Icon name={item.iconFallback || 'terminal'} class="w-16 h-16 text-primary-container" />
+      <div
+        class="relative w-full aspect-[16/9] overflow-hidden rounded-[8px] border border-outline-variant/20 bg-surface-container shadow-2xl"
+      >
+        {item.imageUrl ? (
+          <>
+            <img
+              src={item.imageUrl}
+              alt={`Project ${item.title}`}
+              loading="lazy"
+              decoding="async"
+              class="absolute inset-0 h-full w-full object-cover transition-all duration-700 group-hover:scale-105 project-img-enhance"
+            />
+            <div
+              class="pointer-events-none absolute inset-0 z-[1] bg-[rgba(0,0,0,0.3)]"
+              aria-hidden="true"
+            />
+          </>
+        ) : (
+          <div class="absolute inset-0 flex items-center justify-center bg-surface-container">
+            <Icon name={item.iconFallback || 'terminal'} class="w-16 h-16 text-primary-container" />
+          </div>
+        )}
       </div>
     )}
   </div>

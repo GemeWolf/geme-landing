@@ -23,6 +23,8 @@ export interface ProjectItem {
   technologies: string[];
   imageUrl?: string;
   iconFallback?: string;
+  /** Sin filtros, overlay, sombra ni hover en la imagen (solo cover + 16/9 + radius) */
+  plainImage?: boolean;
   layout: 'image-left' | 'image-right';
 }
 

@@ -4,6 +4,6 @@
   "projects.xrespect.description": "Mantenimiento de servicios backend de alta concurrencia asegurando 99.9% de uptime. Reducción del 30% en latencia de respuesta de BD e implementación de pipelines de automatización CI/CD.",
   "projects.quasar.role": "Ingeniero de Software de Soporte",
   "projects.quasar.description": "Soluciones backend personalizadas para e-commerce, resolviendo incidentes críticos de nivel 2/3 mediante depuración de código y análisis de logs.",
-  "projects.arcadia.role": "Ingeniero DevOps",
-  "projects.arcadia.description": "Optimización del consumo de recursos en servidores Linux y configuración de entornos de producción seguros siguiendo mejores prácticas de infraestructura."
+  "projects.dadimarket.role": "Fundador & Desarrollador",
+  "projects.dadimarket.description": "Tienda digital propia: desarrollo web a medida, scripts para servidores FiveM y bots de Discord, con entrega de producto, integraciones y soporte continuo."
 }
