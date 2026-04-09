@@ -21,9 +21,9 @@ Requiere **Node.js ≥ 22.12** (ver `package.json`).
 | `dev`  | Integración: los PR desde `geme` apuntan aquí. |
 | `main` | Producción. |
 
-**Promoción automática:** al hacer push a `dev`, GitHub Actions ejecuta `npm ci` y `npm run build`; si pasa, fusiona `dev` en `main` (workflow `promote-dev-to-main.yml`).
+**Promoción automática:** al hacer push a `dev`, GitHub Actions ejecuta `npm ci` y `npm run build`; si pasa, crea/actualiza el PR `dev` -> `main` (workflow `promote-dev-to-main.yml`).
 
-**CI:** en pushes a `geme`/`dev` y PRs hacia `dev`/`main` se ejecuta el mismo build (`ci.yml`).
+**CI:** en pushes a `geme`/`dev` y PRs hacia `dev`/`main` se ejecuta el mismo build (`ci.yml`). Además, `main-source-guard.yml` bloquea PRs a `main` que no vengan desde `dev`.
 
 ### Ajustes en GitHub
 
