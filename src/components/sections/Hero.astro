@@ -32,6 +32,24 @@ const t = useTranslations(lang);
         <Button variant="primary" href="#projects">{t('hero.cta.primary')}</Button>
         <Button variant="secondary" data-contact-trigger>{t('hero.cta.secondary')}</Button>
       </div>
+
+      <!-- Now Status Badge -->
+      <div class="mt-4">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full uppercase tracking-[0.08em] text-[0.7rem]"
+          style="background: rgba(150, 53, 71, 0.15); border: 1px solid rgba(150, 53, 71, 0.3); color: #963547;">
+          <span class="now-dot inline-block w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          {t('hero.now')}
+        </span>
+      </div>
+
+      <!-- Live Timezone Widget -->
+      <div class="mt-3 flex items-center gap-2">
+        <span class="live-dot inline-block w-1.5 h-1.5 rounded-full bg-green-400"></span>
+        <span id="hero-clock" class="uppercase tracking-[0.1em]"
+          style="font-size: 0.75rem; color: rgba(247, 218, 243, 0.5);">
+          CDMX — --:-- --
+        </span>
+      </div>
     </div>
 
     <!-- Profile Photo -->
@@ -60,3 +78,36 @@ const t = useTranslations(lang);
     </div>
   </div>
 </section>
+
+<style>
+  .live-dot {
+    animation: pulse-green 2s ease-in-out infinite;
+  }
+  .now-dot {
+    animation: pulse-amber 2s ease-in-out infinite;
+  }
+  @keyframes pulse-green {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(74, 222, 128, 0); }
+  }
+  @keyframes pulse-amber {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.6); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(251, 191, 36, 0); }
+  }
+</style>
+
+<script>
+  function updateClock() {
+    const el = document.getElementById('hero-clock');
+    if (!el) return;
+    const now = new Date().toLocaleTimeString('en-US', {
+      timeZone: 'America/Mexico_City',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });
+    el.textContent = `CDMX — ${now}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
