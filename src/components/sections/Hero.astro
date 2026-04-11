@@ -1,7 +1,7 @@
 ---
 /**
  * Hero — main landing section.
- * Massive "GEME" headline with glow, profile photo (grayscale→color),
+ * Massive "GEME" headline with glow, particle/dot silhouette canvas,
  * status badge, and two CTAs.
  */
 import Button from '../ui/Button.astro';
@@ -52,23 +52,18 @@ const t = useTranslations(lang);
       </div>
     </div>
 
-    <!-- Profile Photo -->
+    <!-- Profile Photo — particle silhouette -->
     <div class="flex justify-center relative mt-12 lg:mt-0">
       <div class="relative w-80 h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]">
-        <!-- Glow pulse behind photo -->
+        <!-- Glow pulse behind canvas -->
         <div class="absolute inset-0 rounded-full bg-primary-container blur-3xl opacity-20 animate-pulse"></div>
-        <!-- Photo container -->
-        <div class="relative z-10 w-full h-full rounded-full border-2 border-primary-container/30 p-2 overflow-hidden" style="background: #1b0b1c;">
-          <img
-            src="/gemewolf.png"
-            alt="GEME — Daniel López Talamantes, Backend Engineer & DevOps Architect"
-            width="420"
-            height="420"
-            loading="eager"
-            decoding="async"
-            class="w-full h-full object-cover rounded-full"
-          />
-        </div>
+        <!-- Particle canvas -->
+        <canvas
+          id="hero-particle-canvas"
+          class="relative z-10 w-full h-full"
+          style="display: block;"
+          aria-label="GEME — Daniel López Talamantes, Backend Engineer & DevOps Architect"
+        ></canvas>
         <!-- Status Badge -->
         <div class="absolute -bottom-2 -right-2 md:-bottom-4 md:-right-4 bg-surface-container p-3 md:p-4 rounded-sm border border-outline-variant/20 shadow-2xl z-20">
           <span class="block font-label text-[8px] md:text-[10px] tracking-widest text-primary-container uppercase mb-1">{t('hero.status.label')}</span>
@@ -97,6 +92,7 @@ const t = useTranslations(lang);
 </style>
 
 <script>
+  // ── Clock ──────────────────────────────────────────────────────────────────
   function updateClock() {
     const el = document.getElementById('hero-clock');
     if (!el) return;
@@ -110,4 +106,123 @@ const t = useTranslations(lang);
   }
   updateClock();
   setInterval(updateClock, 1000);
+
+  // ── Particle silhouette ────────────────────────────────────────────────────
+  (function initParticles() {
+    const canvas = document.getElementById('hero-particle-canvas') as HTMLCanvasElement | null;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Match canvas resolution to its CSS size
+    const rect = canvas.getBoundingClientRect();
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const W = rect.width  || 420;
+    const H = rect.height || 420;
+    canvas.width  = W * DPR;
+    canvas.height = H * DPR;
+    ctx.scale(DPR, DPR);
+
+    const DOT_RADIUS = 2;
+    const GAP        = 5;   // sampling step (dot center to center)
+
+    // Particle data: [x, y, baseY, speed, phase]
+    type Particle = { x: number; y: number; baseY: number; speed: number; phase: number; alpha: number };
+    let particles: Particle[] = [];
+    let animFrameId: number;
+
+    function buildParticles(imgW: number, imgH: number, pixels: Uint8ClampedArray) {
+      particles = [];
+
+      // Scale factor: fit image into canvas
+      const scale = Math.min(W / imgW, H / imgH);
+      const drawW = imgW * scale;
+      const drawH = imgH * scale;
+      const offX  = (W - drawW) / 2;
+      const offY  = (H - drawH) / 2;
+
+      for (let py = GAP / 2; py < H; py += GAP) {
+        for (let px = GAP / 2; px < W; px += GAP) {
+          // Map canvas pixel → image pixel
+          const imgX = Math.floor((px - offX) / scale);
+          const imgY = Math.floor((py - offY) / scale);
+
+          if (imgX < 0 || imgX >= imgW || imgY < 0 || imgY >= imgH) continue;
+
+          const idx   = (imgY * imgW + imgX) * 4;
+          const alpha = pixels[idx + 3];
+
+          if (alpha < 40) continue; // skip transparent pixels
+
+          // Depth: dots near top are slightly dimmer
+          const depthAlpha = 0.35 + (py / H) * 0.65;
+
+          particles.push({
+            x:      px,
+            y:      py,
+            baseY:  py,
+            speed:  0.3 + Math.random() * 0.5,
+            phase:  Math.random() * Math.PI * 2,
+            alpha:  depthAlpha,
+          });
+        }
+      }
+    }
+
+    function draw(ts: number) {
+      ctx.clearRect(0, 0, W, H);
+
+      for (const p of particles) {
+        // Slow floating: ±3px vertical oscillation
+        const drift = Math.sin(ts * 0.001 * p.speed + p.phase) * 3;
+        const y     = p.baseY + drift;
+
+        // Color: wine red gradient by depth (top = dim, bottom = vivid)
+        const r = 150, g = 53, b = 71;
+        ctx.beginPath();
+        ctx.arc(p.x, y, DOT_RADIUS, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${p.alpha})`;
+        ctx.fill();
+      }
+
+      animFrameId = requestAnimationFrame(draw);
+    }
+
+    // Load the source image off-screen to sample pixels
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = '/gemewolf.png';
+
+    img.onload = () => {
+      // Draw into an off-screen canvas to read pixel data
+      const off    = document.createElement('canvas');
+      off.width    = img.naturalWidth;
+      off.height   = img.naturalHeight;
+      const offCtx = off.getContext('2d')!;
+      offCtx.drawImage(img, 0, 0);
+
+      const { data } = offCtx.getImageData(0, 0, off.width, off.height);
+      buildParticles(off.width, off.height, data);
+
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+      requestAnimationFrame(draw);
+    };
+
+    img.onerror = () => {
+      // Fallback: draw a simple circle of dots if image fails
+      for (let angle = 0; angle < Math.PI * 2; angle += 0.05) {
+        const r = W * 0.4;
+        particles.push({
+          x: W / 2 + Math.cos(angle) * r,
+          y: H / 2 + Math.sin(angle) * r,
+          baseY: H / 2 + Math.sin(angle) * r,
+          speed: 0.4 + Math.random() * 0.4,
+          phase: Math.random() * Math.PI * 2,
+          alpha: 0.6,
+        });
+      }
+      requestAnimationFrame(draw);
+    };
+  })();
 </script>
