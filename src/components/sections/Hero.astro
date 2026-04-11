@@ -55,8 +55,6 @@ const t = useTranslations(lang);
     <!-- Profile Photo — particle silhouette -->
     <div class="flex justify-center relative mt-12 lg:mt-0">
       <div class="relative w-80 h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]">
-        <!-- Glow pulse behind canvas -->
-        <div class="absolute inset-0 rounded-full bg-primary-container blur-3xl opacity-20 animate-pulse"></div>
         <!-- Particle canvas -->
         <canvas
           id="hero-particle-canvas"
@@ -155,8 +153,8 @@ const t = useTranslations(lang);
 
           if (alpha < 40) continue; // skip transparent pixels
 
-          // Depth: dots near top are slightly dimmer
-          const depthAlpha = 0.35 + (py / H) * 0.65;
+          // Depth: dots near top are slightly dimmer, max 0.85
+          const depthAlpha = 0.25 + (py / H) * 0.60;
 
           particles.push({
             x:      px,
