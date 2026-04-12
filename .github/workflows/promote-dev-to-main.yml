@@ -37,6 +37,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          COMMITS_AHEAD="$(git rev-list --count main..dev)"
+          if [ "$COMMITS_AHEAD" -eq 0 ]; then
+            echo "dev is already up to date with main — nothing to promote."
+            exit 0
+          fi
+
           PR_NUMBER="$(gh pr list --base main --head dev --state open --json number --jq '.[0].number')"
           if [ -n "$PR_NUMBER" ]; then
             gh pr edit "$PR_NUMBER" \
