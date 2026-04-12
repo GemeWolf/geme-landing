@@ -122,8 +122,8 @@ const t = useTranslations(lang);
     canvas.height = H * DPR;
     ctx.scale(DPR, DPR);
 
-    const DOT_RADIUS = 1.5;
-    const GAP        = 7;   // sampling step (dot center to center)
+    const DOT_RADIUS = 2.5;
+    const GAP        = 5;   // sampling step (dot center to center)
 
     // Particle data: [x, y, baseY, speed, phase]
     type Particle = { x: number; y: number; baseY: number; speed: number; phase: number; alpha: number };
