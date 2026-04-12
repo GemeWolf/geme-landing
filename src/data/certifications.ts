@@ -18,7 +18,7 @@ export const certifications: BilingualData<CertificationItem> = {
       title: 'AI Fundamentals',
       issuer: 'ULA',
       year: '2024',
-      description: 'Universidad Latinoamericana',
+      description: 'Core AI & machine learning concepts',
     },
   ],
   es: [
@@ -26,7 +26,7 @@ export const certifications: BilingualData<CertificationItem> = {
       title: 'Google Cloud Foundations',
       issuer: 'Google',
       year: '2024',
-      description: 'GCP Infrastructure & Architecture',
+      description: 'Infraestructura y Arquitectura GCP',
     },
     {
       title: 'Full Stack Web Development',
@@ -38,7 +38,7 @@ export const certifications: BilingualData<CertificationItem> = {
       title: 'AI Fundamentals',
       issuer: 'ULA',
       year: '2024',
-      description: 'Universidad Latinoamericana',
+      description: 'Conceptos fundamentales de IA y machine learning',
     },
   ],
 };

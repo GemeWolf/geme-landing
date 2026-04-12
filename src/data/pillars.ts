@@ -4,45 +4,45 @@ export const architecturalPillars: BilingualData<PillarItem> = {
   en: [
     {
       icon: 'building',
-      title: 'Scalable Systems',
-      description: 'High-concurrency backend services with 99.9% uptime and clean architecture foundations.',
+      title: 'I build for scale',
+      description: 'Decoupled services that grow without becoming a technical nightmare.',
     },
     {
       icon: 'gauge',
-      title: 'Performance First',
-      description: '30% query latency reduction through SQL optimization and efficient schema design.',
+      title: 'I obsess over performance',
+      description: 'Optimizing Core Web Vitals and latency until the numbers stop bothering me.',
     },
     {
       icon: 'shield',
-      title: 'Security Minded',
-      description: 'OAuth/JWT auth, firewall hardening, reverse proxy configuration and DDoS mitigation.',
+      title: "Security isn't optional",
+      description: 'Zero-trust protocols and solid auth patterns across the full stack.',
     },
     {
       icon: 'refresh-cw',
-      title: 'DevOps Culture',
-      description: 'Automated CI/CD pipelines, containerization with Docker & Kubernetes for zero-downtime deploys.',
+      title: 'I ship, not just code',
+      description: 'Automated CI/CD and containerized deploys so things actually reach production.',
     },
   ],
   es: [
     {
       icon: 'building',
-      title: 'Sistemas Escalables',
-      description: 'Servicios backend de alta concurrencia con 99.9% de uptime y fundamentos de Clean Architecture.',
+      title: 'Construyo para escalar',
+      description: 'Servicios desacoplados que crecen sin convertirse en una pesadilla técnica.',
     },
     {
       icon: 'gauge',
-      title: 'Rendimiento Primero',
-      description: 'Reducción del 30% en latencia de consultas mediante optimización SQL y diseño eficiente de esquemas.',
+      title: 'Me obsesiona el rendimiento',
+      description: 'Optimizo Core Web Vitals y latencia hasta que los números dejan de molestarme.',
     },
     {
       icon: 'shield',
-      title: 'Mentalidad de Seguridad',
-      description: 'Autenticación OAuth/JWT, hardening de firewall, configuración de reverse proxy y mitigación de DDoS.',
+      title: 'La seguridad no es opcional',
+      description: 'Protocolos zero-trust y patrones de auth sólidos en todo el stack.',
     },
     {
       icon: 'refresh-cw',
-      title: 'Cultura DevOps',
-      description: 'Pipelines CI/CD automatizados, containerización con Docker & Kubernetes para deploys sin tiempo de inactividad.',
+      title: 'Yo entrego, no solo codifico',
+      description: 'CI/CD automatizado y deploys containerizados para que las cosas lleguen a producción.',
     },
   ],
 };

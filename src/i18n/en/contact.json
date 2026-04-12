@@ -11,5 +11,6 @@
   "contact.message.placeholder": "Tell me about your project...",
   "contact.submit": "SEND MESSAGE",
   "contact.close": "Close dialog",
-  "contact.toast": "Message sent successfully! 🚀"
+  "contact.toast": "Message sent successfully! 🚀",
+  "contact.error": "Something went wrong. Please try again."
 }
