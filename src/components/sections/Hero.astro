@@ -133,6 +133,15 @@ const t = useTranslations(lang);
     function buildParticles(imgW: number, imgH: number, pixels: Uint8ClampedArray) {
       particles = [];
 
+      // Sample background color from top-left corner pixel
+      const bgR = pixels[0];
+      const bgG = pixels[1];
+      const bgB = pixels[2];
+
+      // Contrast threshold: Euclidean distance in RGB space
+      // Higher = only keep pixels very different from background
+      const THRESHOLD = 45;
+
       // Scale factor: fit image into canvas
       const scale = Math.min(W / imgW, H / imgH);
       const drawW = imgW * scale;
@@ -148,10 +157,18 @@ const t = useTranslations(lang);
 
           if (imgX < 0 || imgX >= imgW || imgY < 0 || imgY >= imgH) continue;
 
-          const idx   = (imgY * imgW + imgX) * 4;
-          const alpha = pixels[idx + 3];
+          const idx = (imgY * imgW + imgX) * 4;
+          const r   = pixels[idx];
+          const g   = pixels[idx + 1];
+          const b   = pixels[idx + 2];
 
-          if (alpha < 40) continue; // skip transparent pixels
+          // Skip pixels too similar to the background
+          const dist = Math.sqrt(
+            (r - bgR) ** 2 +
+            (g - bgG) ** 2 +
+            (b - bgB) ** 2
+          );
+          if (dist < THRESHOLD) continue;
 
           // Depth: dots near top are slightly dimmer, max 0.85
           const depthAlpha = 0.25 + (py / H) * 0.60;
@@ -190,7 +207,7 @@ const t = useTranslations(lang);
     // Load the source image off-screen to sample pixels
     const img = new Image();
     img.crossOrigin = 'anonymous';
-    img.src = '/gemewolf.png';
+    img.src = '/gemewolf.webp';
 
     img.onload = () => {
       // Draw into an off-screen canvas to read pixel data
