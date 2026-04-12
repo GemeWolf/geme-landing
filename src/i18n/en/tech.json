@@ -1,14 +1,4 @@
 {
   "tech.label": "Core Competencies",
-  "tech.title": "The Technical Stack",
-  "tech.java": "Spring Boot & Hibernate.",
-  "tech.golang": "High-performance services.",
-  "tech.nodejs": "Backend scripting & APIs.",
-  "tech.docker": "Containerized environments.",
-  "tech.kubernetes": "GKE Orchestration at scale.",
-  "tech.gcloud": "Cloud infrastructure.",
-  "tech.sql": "Relational design.",
-  "tech.redis": "Caching & performance.",
-  "tech.cicd": "GitHub Actions pipelines.",
-  "tech.terraform": "Infrastructure as code."
+  "tech.title": "The Technical Stack"
 }

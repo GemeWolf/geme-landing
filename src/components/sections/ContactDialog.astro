@@ -2,7 +2,7 @@
 /**
  * ContactDialog — native <dialog> modal for contact form.
  * Opens via data-contact-trigger buttons. Zero framework dependencies.
- * Minimal inline JS for open/close behavior.
+ * Submits to Discord webhook as an embed.
  */
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
@@ -16,6 +16,7 @@ const t = useTranslations(lang);
   id="contact-dialog"
   class="w-full max-w-lg mx-auto my-auto p-0 bg-transparent backdrop:bg-surface-dim/80 backdrop:backdrop-blur-sm"
   data-success-msg={t('contact.toast')}
+  data-error-msg={t('contact.error')}
 >
   <div class="glass-card rounded-sm p-8 md:p-10 border border-outline-variant/30">
     <!-- Header -->
@@ -92,7 +93,8 @@ const t = useTranslations(lang);
 
       <button
         type="submit"
-        class="w-full bg-primary-container text-white py-4 rounded-sm font-label tracking-widest text-xs uppercase glow-on-hover transition-all mt-2 cursor-pointer"
+        id="contact-submit"
+        class="w-full bg-primary-container text-white py-4 rounded-sm font-label tracking-widest text-xs uppercase glow-on-hover transition-all mt-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {t('contact.submit')}
       </button>
@@ -101,13 +103,33 @@ const t = useTranslations(lang);
 </dialog>
 
 <script>
-  // Contact Dialog — open/close behavior
-  const dialog = document.getElementById('contact-dialog') as HTMLDialogElement | null;
-  const closeBtn = document.getElementById('contact-close');
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const WEBHOOK_URL =
+    'https://discordapp.com/api/webhooks/1492692648090402889/iQE-SQcclgOUGP-EYefPy07poUU2aMkJP3tgrUkKikgyfHlyon2_Y5j4OpQ-iNPbIG6K';
+
+  const dialog    = document.getElementById('contact-dialog') as HTMLDialogElement | null;
+  const closeBtn  = document.getElementById('contact-close');
+  const form      = document.getElementById('contact-form') as HTMLFormElement | null;
+  const submitBtn = document.getElementById('contact-submit') as HTMLButtonElement | null;
+
+  function showToast(msg: string, isError = false) {
+    const toast = document.createElement('div');
+    toast.className = [
+      'fixed bottom-6 right-6 z-[100] px-6 py-4 rounded-sm font-label text-xs tracking-widest shadow-2xl backdrop-blur-sm animate-[fadeIn_300ms_ease]',
+      isError
+        ? 'bg-red-900/90 text-red-200'
+        : 'bg-primary-container/90 text-white',
+    ].join(' ');
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 300ms ease';
+      setTimeout(() => toast.remove(), 300);
+    }, 4000);
+  }
 
   if (dialog) {
-    // Open triggers — any element with data-contact-trigger
+    // Open triggers
     document.querySelectorAll('[data-contact-trigger]').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -123,23 +145,58 @@ const t = useTranslations(lang);
       if (e.target === dialog) dialog.close();
     });
 
-    // Form submit simulation (no backend — show success feedback)
-    form?.addEventListener('submit', (e) => {
+    // Form submit → Discord webhook
+    form?.addEventListener('submit', async (e) => {
       e.preventDefault();
-      form.reset();
-      dialog.close();
+      if (!submitBtn) return;
 
-      // Simple toast notification
-      const toast = document.createElement('div');
-      toast.className =
-        'fixed bottom-6 right-6 z-[100] bg-primary-container/90 text-white px-6 py-4 rounded-sm font-label text-xs tracking-widest shadow-2xl backdrop-blur-sm animate-[fadeIn_300ms_ease]';
-      toast.textContent = dialog.dataset.successMsg ?? 'Message sent!';
-      document.body.appendChild(toast);
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity 300ms ease';
-        setTimeout(() => toast.remove(), 300);
-      }, 3000);
+      const data = new FormData(form);
+      const name    = data.get('name')    as string;
+      const email   = data.get('email')   as string;
+      const subject = data.get('subject') as string;
+      const message = data.get('message') as string;
+
+      submitBtn.disabled = true;
+      const originalText  = submitBtn.textContent ?? '';
+      submitBtn.textContent = '...';
+
+      const payload = {
+        embeds: [
+          {
+            title: `📬 New contact — ${subject}`,
+            color: 0x963547,
+            fields: [
+              { name: '👤 Name',    value: name,    inline: true  },
+              { name: '📧 Email',   value: email,   inline: true  },
+              { name: '📋 Subject', value: subject, inline: false },
+              { name: '💬 Message', value: message, inline: false },
+            ],
+            footer: { text: 'geme.dev contact form' },
+            timestamp: new Date().toISOString(),
+          },
+        ],
+      };
+
+      try {
+        const res = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (res.ok || res.status === 204) {
+          form.reset();
+          dialog.close();
+          showToast(dialog.dataset.successMsg ?? 'Message sent!');
+        } else {
+          throw new Error(`HTTP ${res.status}`);
+        }
+      } catch {
+        showToast(dialog.dataset.errorMsg ?? 'Something went wrong. Try again.', true);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
     });
   }
 </script>

@@ -6,6 +6,7 @@
 import Icon from '../ui/Icon.astro';
 import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 import { recentBuilds } from '../../data/projects';
+import { siteConfig } from '../../data/site-config';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -24,7 +25,7 @@ try {
   }
 } catch { /* fallback stays 50 */ }
 
-const yearsExperience = new Date().getFullYear() - 2023;
+const yearsExperience = new Date().getFullYear() - siteConfig.careerStartYear;
 const projectCount = recentBuilds.en.length;
 
 const stats = [

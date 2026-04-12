@@ -1,9 +1,3 @@
 {
-  "projects.title": "Recent Builds",
-  "projects.xrespect.role": "Backend & DevOps Engineer",
-  "projects.xrespect.description": "Maintained high-concurrency backend services ensuring 99.9% uptime. Reduced DB response latency by 30% and implemented full CI/CD automation pipelines.",
-  "projects.quasar.role": "Support Software Engineer",
-  "projects.quasar.description": "Custom backend solutions for e-commerce, resolving critical level 2/3 incidents through code debugging and log analysis.",
-  "projects.dadimarket.role": "Founder & Developer",
-  "projects.dadimarket.description": "Own digital storefront for custom web development, FiveM server scripts, and Discord bots — product delivery, integrations, and ongoing support."
+  "projects.title": "Recent Builds"
 }

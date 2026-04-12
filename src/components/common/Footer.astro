@@ -39,18 +39,17 @@ const t = useTranslations(lang);
 
     <!-- Social Icon Links -->
     <div class="flex gap-8">
-      <a href="mailto:daniellopeztalamantes@outlook.com" class="group" aria-label="Send email">
-        <Icon name="mail" class="w-6 h-6 text-primary-container group-hover:text-primary transition-colors" />
-      </a>
-      <a href="https://github.com/GemeWolf" target="_blank" rel="noopener noreferrer" class="group" aria-label="GitHub">
-        <Icon name="github" class="w-6 h-6 text-primary-container group-hover:text-primary transition-colors" />
-      </a>
-      <a href="https://linkedin.com/in/daniel-lopez-dev" target="_blank" rel="noopener noreferrer" class="group" aria-label="LinkedIn">
-        <Icon name="linkedin" class="w-6 h-6 text-primary-container group-hover:text-primary transition-colors" />
-      </a>
-      <a href="https://discord.com/users/695150517986263072" target="_blank" rel="noopener noreferrer" class="group" aria-label="Discord">
-        <Icon name="discord" class="w-6 h-6 text-primary-container group-hover:text-primary transition-colors" />
-      </a>
+      {socialLinks.filter(link => link.icon).map((link) => (
+        <a
+          href={link.url}
+          target={link.url.startsWith('mailto') ? undefined : '_blank'}
+          rel={link.url.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+          class="group"
+          aria-label={link.label}
+        >
+          <Icon name={link.icon!} class="w-6 h-6 text-primary-container group-hover:text-primary transition-colors" />
+        </a>
+      ))}
     </div>
   </div>
 </footer>

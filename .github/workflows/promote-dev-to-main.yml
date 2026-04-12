@@ -33,10 +33,16 @@ jobs:
           npm ci
           npm run build
 
-      - name: Create or update PR dev -> main
+      - name: Create or update PR dev -> main and enable auto-merge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          COMMITS_AHEAD="$(git rev-list --count main..dev)"
+          if [ "$COMMITS_AHEAD" -eq 0 ]; then
+            echo "dev is already up to date with main — nothing to promote."
+            exit 0
+          fi
+
           PR_NUMBER="$(gh pr list --base main --head dev --state open --json number --jq '.[0].number')"
           if [ -n "$PR_NUMBER" ]; then
             gh pr edit "$PR_NUMBER" \
@@ -48,4 +54,6 @@ jobs:
               --head dev \
               --title "Promote dev to main" \
               --body "Automated promotion PR from \`dev\` to \`main\` after successful build."
+            PR_NUMBER="$(gh pr list --base main --head dev --state open --json number --jq '.[0].number')"
           fi
+          gh pr merge "$PR_NUMBER" --squash --auto
