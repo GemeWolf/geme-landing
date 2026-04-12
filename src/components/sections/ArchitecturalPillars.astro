@@ -21,7 +21,7 @@ const t = useTranslations(lang);
       {t('pillars.title')}
     </h2>
   </div>
-  <div class="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-8 max-w-5xl mx-auto">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-8 max-w-5xl mx-auto">
     {architecturalPillars[lang].map((item) => (
       <PillarCard item={item} />
     ))}
