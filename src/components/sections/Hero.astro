@@ -54,7 +54,7 @@ const t = useTranslations(lang);
 
     <!-- Profile Photo — particle silhouette -->
     <div class="flex justify-center relative mt-12 lg:mt-0">
-      <div class="relative" style="width: 380px; height: 380px;">
+      <div class="relative" style="width: 450px; height: 450px;">
         <!-- Particle canvas -->
         <canvas
           id="hero-particle-canvas"
@@ -116,8 +116,8 @@ const t = useTranslations(lang);
     // Match canvas resolution to its CSS size
     const rect = canvas.getBoundingClientRect();
     const DPR = Math.min(window.devicePixelRatio || 1, 2);
-    const W = rect.width  || 380;
-    const H = rect.height || 380;
+    const W = rect.width  || 450;
+    const H = rect.height || 450;
     canvas.width  = W * DPR;
     canvas.height = H * DPR;
     ctx.scale(DPR, DPR);
