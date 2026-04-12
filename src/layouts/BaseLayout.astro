@@ -18,6 +18,9 @@ const {
   title = t('meta.title'),
   description = t('meta.description'),
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
+const ogImage = new URL('/gemewolf-tight.png', Astro.site ?? Astro.url.origin).href;
 ---
 
 <!doctype html>
@@ -31,17 +34,21 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="author" content="Daniel López Talamantes" />
+    <link rel="canonical" href={canonicalURL} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content={lang === 'es' ? 'es_MX' : 'en_US'} />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- Fonts — Google Fonts with display=swap for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -52,7 +59,7 @@ const {
     />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/gemewolf-tight.png" />
 
     <!-- Browser language detection — redirect Spanish users to /es/ -->
     <script is:inline>
