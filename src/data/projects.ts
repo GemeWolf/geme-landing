@@ -16,7 +16,7 @@ export const recentBuilds: BilingualData<ProjectItem> = {
     {
       title: 'XRespect',
       role: 'Backend & DevOps Engineer',
-      period: 'Feb 2024 – Dic 2025',
+      period: 'Feb 2024 – Dec 2025',
       description:
         'Kept their backend alive at 99.9% uptime, cut DB response latency by 30%, and automated their entire deploy pipeline.',
       technologies: ['Java', 'MariaDB', 'CI/CD', 'Docker', 'Nginx'],
@@ -26,7 +26,7 @@ export const recentBuilds: BilingualData<ProjectItem> = {
     {
       title: 'Quasar Store',
       role: 'Support Software Engineer',
-      period: 'Jun 2023 – Abr 2024',
+      period: 'Jun 2023 – Apr 2024',
       description:
         'Custom backend for a FiveM e-commerce platform. Debugged critical incidents and kept the platform stable under real traffic.',
       technologies: ['Node.js', 'PostgreSQL', 'REST API'],
