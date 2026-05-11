@@ -36,11 +36,11 @@ const t = useTranslations(lang);
         {t('nav.credentials')}
       </a>
       <div class="flex gap-1 font-label text-xs tracking-widest uppercase">
-        <a href="/" class:list={['px-2 py-1 transition-colors', lang === 'en' ? 'text-primary font-bold' : 'text-on-surface-variant/60 hover:text-primary']}>
+        <a href="/" onclick="localStorage.setItem('lang-preference', 'en')" class:list={['px-2 py-1 transition-colors', lang === 'en' ? 'text-primary font-bold' : 'text-on-surface-variant/60 hover:text-primary']}>
           {t('nav.lang.en')}
         </a>
         <span class="text-outline-variant">|</span>
-        <a href="/es" class:list={['px-2 py-1 transition-colors', lang === 'es' ? 'text-primary font-bold' : 'text-on-surface-variant/60 hover:text-primary']}>
+        <a href="/es" onclick="localStorage.setItem('lang-preference', 'es')" class:list={['px-2 py-1 transition-colors', lang === 'es' ? 'text-primary font-bold' : 'text-on-surface-variant/60 hover:text-primary']}>
           {t('nav.lang.es')}
         </a>
       </div>

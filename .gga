@@ -1,0 +1,21 @@
+# Gentleman Guardian Angel Configuration
+# https://github.com/your-org/gga
+
+# AI Provider (required)
+# Using OpenCode Zen API with glm-5.1 model
+PROVIDER="opencode:opencode/glm-5.1"
+
+# File patterns to include in review (comma-separated)
+FILE_PATTERNS="*.ts,*.tsx,*.js,*.jsx,*.astro"
+
+# File patterns to exclude from review (comma-separated)
+EXCLUDE_PATTERNS="*.test.ts,*.spec.ts,*.test.tsx,*.spec.tsx,*.d.ts"
+
+# File containing code review rules
+RULES_FILE="AGENTS.md"
+
+# Strict mode: fail if AI response is ambiguous
+STRICT_MODE="true"
+
+# Timeout in seconds for AI provider response
+TIMEOUT="300"

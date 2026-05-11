@@ -13,6 +13,24 @@ export const POST: APIRoute = async ({ request, locals }) => {
     });
   }
 
+  try {
+    const url = new URL(webhookUrl);
+    if (url.hostname === 'discordapp.com') {
+      return new Response(
+        JSON.stringify({ error: 'Server misconfiguration' }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+  } catch {
+    return new Response(JSON.stringify({ error: 'Invalid webhook URL' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await request.json();
