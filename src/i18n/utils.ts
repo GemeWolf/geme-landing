@@ -57,6 +57,29 @@ const dictionaries: Record<SupportedLang, Dictionary> = {
   },
 };
 
+// Build an inverted index for O(1) lookup and detect collisions at startup
+type TranslationKey = keyof typeof enMeta
+  | keyof typeof enNav
+  | keyof typeof enHero
+  | keyof typeof enStats
+  | keyof typeof enTech
+  | keyof typeof enPillars
+  | keyof typeof enProjects
+  | keyof typeof enCerts
+  | keyof typeof enCta
+  | keyof typeof enContact
+  | keyof typeof enFooter;
+
+const keyToNamespace: Map<string, string> = new Map();
+for (const [ns, dict] of Object.entries(dictionaries.en)) {
+  for (const key of Object.keys(dict)) {
+    if (keyToNamespace.has(key)) {
+      console.warn(`i18n collision detected: "${key}" exists in both "${keyToNamespace.get(key)}" and "${ns}"`);
+    }
+    keyToNamespace.set(key, ns);
+  }
+}
+
 export function getLangFromUrl(url: URL): SupportedLang {
   const [, segment] = url.pathname.split('/');
   if (segment === 'es' || segment?.startsWith('es')) return 'es';
@@ -64,17 +87,9 @@ export function getLangFromUrl(url: URL): SupportedLang {
 }
 
 export function useTranslations(lang: SupportedLang) {
-  return function t(key: string): string {
-    const dict = dictionaries[lang];
-    const fallbackDict = dictionaries.en;
-
-    // Search in every namespace for an exact key match
-    for (const ns of Object.values(dict)) {
-      if (key in ns) return ns[key];
-    }
-    for (const ns of Object.values(fallbackDict)) {
-      if (key in ns) return ns[key];
-    }
-    return key;
+  return function t(key: TranslationKey): string {
+    const ns = keyToNamespace.get(key);
+    if (!ns) return key;
+    return dictionaries[lang][ns]?.[key] ?? dictionaries.en[ns]?.[key] ?? key;
   };
 }

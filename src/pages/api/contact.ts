@@ -13,16 +13,22 @@ export const POST: APIRoute = async ({ request, locals }) => {
     });
   }
 
-  if (webhookUrl.includes('discordapp.com')) {
-    return new Response(
-      JSON.stringify({
-        error: 'Discord webhook URL uses deprecated domain. Please update DISCORD_WEBHOOK_URL to use discord.com',
-      }),
-      {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      }
-    );
+  try {
+    const url = new URL(webhookUrl);
+    if (url.hostname === 'discordapp.com') {
+      return new Response(
+        JSON.stringify({ error: 'Server misconfiguration' }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+  } catch {
+    return new Response(JSON.stringify({ error: 'Invalid webhook URL' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   let body: Record<string, unknown>;

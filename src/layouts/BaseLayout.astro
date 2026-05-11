@@ -65,7 +65,9 @@ const ogImage = new URL('/gemewolf-tight.png', Astro.site ?? Astro.url.origin).h
     <script is:inline>
       (function () {
         const saved = localStorage.getItem('lang-preference');
-        if (!saved && navigator.language.startsWith('es') && location.pathname === '/') {
+        const isSpanishBrowser = navigator.language.startsWith('es');
+        if (location.pathname !== '/') return;
+        if (saved === 'es' || (!saved && isSpanishBrowser)) {
           location.href = '/es/';
         }
       })();
