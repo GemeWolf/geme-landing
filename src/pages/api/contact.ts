@@ -13,6 +13,18 @@ export const POST: APIRoute = async ({ request, locals }) => {
     });
   }
 
+  if (webhookUrl.includes('discordapp.com')) {
+    return new Response(
+      JSON.stringify({
+        error: 'Discord webhook URL uses deprecated domain. Please update DISCORD_WEBHOOK_URL to use discord.com',
+      }),
+      {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await request.json();

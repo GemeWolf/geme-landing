@@ -63,9 +63,12 @@ const ogImage = new URL('/gemewolf-tight.png', Astro.site ?? Astro.url.origin).h
 
     <!-- Browser language detection — redirect Spanish users to /es/ -->
     <script is:inline>
-      if (navigator.language.startsWith('es') && location.pathname === '/') {
-        location.href = '/es/';
-      }
+      (function () {
+        const saved = localStorage.getItem('lang-preference');
+        if (!saved && navigator.language.startsWith('es') && location.pathname === '/') {
+          location.href = '/es/';
+        }
+      })();
     </script>
   </head>
   <body class="antialiased min-h-screen">
