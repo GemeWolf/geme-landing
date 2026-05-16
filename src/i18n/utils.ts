@@ -25,10 +25,60 @@ import esCta from './es/cta.json' with { type: 'json' };
 import esContact from './es/contact.json' with { type: 'json' };
 import esFooter from './es/footer.json' with { type: 'json' };
 
-const dictionaries: Record<SupportedLang, Record<string, string>> = {
-  en: { ...enMeta, ...enNav, ...enHero, ...enStats, ...enTech, ...enPillars, ...enProjects, ...enCerts, ...enCta, ...enContact, ...enFooter },
-  es: { ...esMeta, ...esNav, ...esHero, ...esStats, ...esTech, ...esPillars, ...esProjects, ...esCerts, ...esCta, ...esContact, ...esFooter },
+type NamespaceDict = Record<string, string>;
+type Dictionary = Record<string, NamespaceDict>;
+
+const dictionaries: Record<SupportedLang, Dictionary> = {
+  en: {
+    meta: enMeta,
+    nav: enNav,
+    hero: enHero,
+    stats: enStats,
+    tech: enTech,
+    pillars: enPillars,
+    projects: enProjects,
+    certs: enCerts,
+    cta: enCta,
+    contact: enContact,
+    footer: enFooter,
+  },
+  es: {
+    meta: esMeta,
+    nav: esNav,
+    hero: esHero,
+    stats: esStats,
+    tech: esTech,
+    pillars: esPillars,
+    projects: esProjects,
+    certs: esCerts,
+    cta: esCta,
+    contact: esContact,
+    footer: esFooter,
+  },
 };
+
+// Build an inverted index for O(1) lookup and detect collisions at startup
+type TranslationKey = keyof typeof enMeta
+  | keyof typeof enNav
+  | keyof typeof enHero
+  | keyof typeof enStats
+  | keyof typeof enTech
+  | keyof typeof enPillars
+  | keyof typeof enProjects
+  | keyof typeof enCerts
+  | keyof typeof enCta
+  | keyof typeof enContact
+  | keyof typeof enFooter;
+
+const keyToNamespace: Map<string, string> = new Map();
+for (const [ns, dict] of Object.entries(dictionaries.en)) {
+  for (const key of Object.keys(dict)) {
+    if (keyToNamespace.has(key)) {
+      console.warn(`i18n collision detected: "${key}" exists in both "${keyToNamespace.get(key)}" and "${ns}"`);
+    }
+    keyToNamespace.set(key, ns);
+  }
+}
 
 export function getLangFromUrl(url: URL): SupportedLang {
   const [, segment] = url.pathname.split('/');
@@ -37,7 +87,9 @@ export function getLangFromUrl(url: URL): SupportedLang {
 }
 
 export function useTranslations(lang: SupportedLang) {
-  return function t(key: keyof typeof dictionaries.en): string {
-    return dictionaries[lang][key] ?? dictionaries.en[key] ?? key;
+  return function t(key: TranslationKey): string {
+    const ns = keyToNamespace.get(key);
+    if (!ns) return key;
+    return dictionaries[lang][ns]?.[key] ?? dictionaries.en[ns]?.[key] ?? key;
   };
 }
