@@ -6,7 +6,7 @@ import cloudflare from '@astrojs/cloudflare';
 // https://astro.build/config
 export default defineConfig({
   adapter: cloudflare(),
-  build: { format: 'directory' },
+  build: { format: 'directory', assets: 'assets' },
   image: {
     remotePatterns: [{ hostname: 'lh3.googleusercontent.com' }],
   },
