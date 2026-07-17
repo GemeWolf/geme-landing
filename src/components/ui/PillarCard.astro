@@ -8,13 +8,14 @@ import Icon from './Icon.astro';
 
 interface Props {
   item: PillarItem;
+  index?: number;
 }
 
-const { item } = Astro.props;
+const { item, index } = Astro.props;
 ---
 
-<div class="bg-transparent p-5 rounded-lg border border-primary-container/30 hover:shadow-[0_0_40px_rgba(150,53,71,0.15)] transition-all group">
-  <Icon name={item.icon} class="w-9 h-9 text-primary-container mb-6 block group-hover:scale-110 transition-transform" />
-  <h3 class="font-headline text-lg md:text-xl font-bold text-on-surface mb-3">{item.title}</h3>
+<div class="bg-transparent p-5 rounded-lg border border-primary-container/30 hover:shadow-[0_0_40px_rgba(150,53,71,0.15)] transition-all group reveal-child" style={index !== undefined ? `--reveal-index: ${index}` : undefined}>
+  <Icon name={item.icon} class="w-9 h-9 text-primary-container mb-6 block group-hover:scale-110 group-hover:-translate-y-1 transition-transform" />
+  <h3 class="font-headline text-lg md:text-xl font-bold text-on-surface mb-3 group-hover:text-primary transition-colors">{item.title}</h3>
   <p class="font-body text-xs md:text-sm text-on-surface-variant/70 leading-relaxed">{item.description}</p>
 </div>
