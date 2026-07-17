@@ -12,11 +12,11 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section id="certs" class="px-6 md:px-24 mb-24">
+<section id="certs" class="px-6 md:px-24 mb-24 reveal">
   <SectionHeader label={t('certs.label')} title={t('certs.title')} />
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    {certifications[lang].map((item) => (
-      <CertCard item={item} />
+    {certifications[lang].map((item, index) => (
+      <CertCard item={item} index={index} />
     ))}
   </div>
 </section>
