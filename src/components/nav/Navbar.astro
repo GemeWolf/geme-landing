@@ -11,8 +11,8 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<header class="fixed top-0 w-full z-50 bg-surface-dim/60 backdrop-blur-xl border-b border-outline-variant/20">
-  <nav class="flex justify-between items-center px-6 py-4 max-w-screen-2xl mx-auto">
+<header class="fixed top-0 w-full z-50 bg-surface-dim/60 backdrop-blur-xl border-b border-outline-variant/20 transition-all duration-300">
+  <nav class="flex justify-between items-center px-6 py-4 max-w-screen-2xl mx-auto hero-animate">
     <!-- Logo -->
     <a href="#" class="flex items-center gap-3 group">
       <Icon name="layout-grid" class="w-6 h-6 text-primary-container" />
@@ -101,5 +101,15 @@ const t = useTranslations(lang);
         toggle.setAttribute('aria-expanded', 'false');
       });
     });
+  }
+
+  // Toggle scrolled appearance after 20px of scroll
+  const header = document.querySelector('header');
+  if (header) {
+    const updateScrolled = () => {
+      header.classList.toggle('navbar-scrolled', window.scrollY > 20);
+    };
+    updateScrolled();
+    window.addEventListener('scroll', updateScrolled, { passive: true });
   }
 </script>
