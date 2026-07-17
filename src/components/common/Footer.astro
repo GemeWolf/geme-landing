@@ -8,6 +8,7 @@ import { getLangFromUrl, useTranslations } from '../../i18n/utils';
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="bg-surface-dim w-full py-16 px-6 border-t border-outline-variant/40">
@@ -18,7 +19,7 @@ const t = useTranslations(lang);
         GEME
       </span>
       <p class="font-label text-[10px] tracking-[0.3em] uppercase text-on-surface-variant/60 text-center">
-        {t('footer.copyright')}
+        © {currentYear} {t('footer.copyright')}
       </p>
     </div>
 
