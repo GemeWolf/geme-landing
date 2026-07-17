@@ -9,14 +9,15 @@ import Icon from './Icon.astro';
 
 interface Props {
   item: ProjectItem;
+  index?: number;
 }
 
-const { item } = Astro.props;
+const { item, index } = Astro.props;
 const isImageRight = item.layout === 'image-right';
 const plainImage = item.plainImage === true;
 ---
 
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start hover:-translate-y-1 transition-transform duration-300 reveal-child" style={index !== undefined ? `--reveal-index: ${index}` : undefined}>
   {/* Image — default: framed + overlay + enhance; plainImage: solo img */}
   <div
     class:list={[
