@@ -8,14 +8,15 @@ import Icon from './Icon.astro';
 
 interface Props {
   item: TechItem;
+  index?: number;
 }
 
-const { item } = Astro.props;
+const { item, index } = Astro.props;
 ---
 
-<div class="glass-card p-5 md:p-6 rounded-sm hover:border-primary-container transition-all group">
+<div class="glass-card p-5 md:p-6 rounded-sm hover:-translate-y-1 hover:border-primary-container transition-all duration-300 group reveal-child" style={index !== undefined ? `--reveal-index: ${index}` : undefined}>
   <div class="w-10 h-10 mb-4 flex items-center justify-center bg-surface-container-highest rounded-sm group-hover:bg-primary-container transition-colors">
-    <Icon name={item.icon} class="w-5 h-5 text-primary group-hover:text-white transition-colors" />
+    <Icon name={item.icon} class="w-5 h-5 text-primary group-hover:text-white transition-colors group-hover:scale-110" />
   </div>
   <h3 class="font-headline text-sm font-bold text-on-surface mb-2 leading-tight">{item.name}</h3>
   <p class="font-body text-[11px] md:text-[9px] text-on-surface-variant/70 leading-relaxed">{item.description}</p>
