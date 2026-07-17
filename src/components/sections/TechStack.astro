@@ -12,11 +12,11 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section id="stack" class="px-6 md:px-24 mb-24">
+<section id="stack" class="px-6 md:px-24 mb-24 reveal">
   <SectionHeader label={t('tech.label')} title={t('tech.title')} />
   <div class="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
-    {techStack[lang].map((item) => (
-      <TechCard item={item} />
+    {techStack[lang].map((item, index) => (
+      <TechCard item={item} index={index} />
     ))}
   </div>
 </section>

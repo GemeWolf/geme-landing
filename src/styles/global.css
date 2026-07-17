@@ -150,3 +150,88 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Scroll Reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.is-visible,
+.reveal.is-visible .reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-child {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--reveal-index, 0) * 60ms);
+}
+
+/* ── Hero load animations ── */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-animate {
+  animation: hero-fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-animate-1 { animation-delay: 0.1s; }
+.hero-animate-2 { animation-delay: 0.2s; }
+.hero-animate-3 { animation-delay: 0.3s; }
+.hero-animate-4 { animation-delay: 0.4s; }
+.hero-animate-5 { animation-delay: 0.5s; }
+
+/* ── CTA radial pulse ── */
+@keyframes pulse-radial {
+  0%, 100% { transform: scale(1); opacity: 0.08; }
+  50% { transform: scale(1.08); opacity: 0.12; }
+}
+.cta-pulse {
+  animation: pulse-radial 6s ease-in-out infinite;
+}
+
+/* ── Decorative line grow ── */
+@keyframes line-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.line-grow.is-visible {
+  animation: line-grow 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: left;
+}
+.line-grow-right.is-visible {
+  animation: line-grow 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: right;
+}
+
+/* ── Navbar scroll state ── */
+.navbar-scrolled {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background-color: rgba(30, 13, 31, 0.8);
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-child {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hero-animate {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .cta-pulse {
+    animation: none !important;
+  }
+  .line-grow, .line-grow-right {
+    animation: none !important;
+    transform: scaleX(1) !important;
+  }
+}

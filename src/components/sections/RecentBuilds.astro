@@ -11,19 +11,19 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<section id="projects" class="px-6 md:px-24 mb-24">
+<section id="projects" class="px-6 md:px-24 mb-24 reveal">
   <!-- Section title with decorative lines -->
   <div class="flex items-center gap-3 mb-12">
-    <div class="h-px bg-outline-variant/30 flex-grow"></div>
+    <div class="h-px bg-outline-variant/30 flex-grow line-grow"></div>
     <h2 class="font-headline text-xl font-bold uppercase tracking-widest text-primary-container">
       {t('projects.title')}
     </h2>
-    <div class="h-px bg-outline-variant/30 flex-grow"></div>
+    <div class="h-px bg-outline-variant/30 flex-grow line-grow-right"></div>
   </div>
 
   <div class="space-y-20 md:space-y-32">
-    {recentBuilds[lang].map((project) => (
-      <ProjectCard item={project} />
+    {recentBuilds[lang].map((project, index) => (
+      <ProjectCard item={project} index={index} />
     ))}
   </div>
 </section>

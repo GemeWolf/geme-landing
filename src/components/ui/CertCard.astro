@@ -6,12 +6,13 @@ import type { CertificationItem } from '../../data/types';
 
 interface Props {
   item: CertificationItem;
+  index?: number;
 }
 
-const { item } = Astro.props;
+const { item, index } = Astro.props;
 ---
 
-<div class="glass-card p-6 rounded-sm border-l-4 border-l-primary">
+<div class="glass-card p-6 rounded-sm border-l-4 border-l-primary hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(150,53,71,0.2)] transition-all duration-300 reveal-child" style={index !== undefined ? `--reveal-index: ${index}` : undefined}>
   <span class="block font-label text-[10px] text-primary uppercase mb-2">
     {item.year} / {item.issuer}
   </span>
